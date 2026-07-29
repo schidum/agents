@@ -13,7 +13,6 @@ def build_question():
         "title": "Урожай на поле",
         "story": "Каждый участок земли даёт одинаковый урожай.",
         "prompt": f"Если 1 участок даёт {harvest_per_plot} кг, сколько кг даст {chosen_plots} участков?",
-        "formula_text": f"{harvest_per_plot} x {chosen_plots} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше поля — больше урожай. Это прямая пропорция.",

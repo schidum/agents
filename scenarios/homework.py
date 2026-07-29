@@ -13,7 +13,6 @@ def build_question():
         "title": "Домашняя работа",
         "story": "Каждую минуту ученик решает одинаковое число примеров.",
         "prompt": f"Если за 1 час он решает {questions_per_hour} примеров, сколько он решит за {chosen_questions // 10} часа?",
-        "formula_text": f"{questions_per_hour} x {chosen_questions // 10} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше заданий — больше времени. Это прямая пропорция.",

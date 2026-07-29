@@ -13,7 +13,6 @@ def build_question():
         "title": "Выручка магазина",
         "story": "Каждый покупатель приносит одинаковую сумму в магазин.",
         "prompt": f"Если 1 покупатель приносит {money_per_customer} монет, сколько монет принесут {chosen_customers} покупателей?",
-        "formula_text": f"{money_per_customer} x {chosen_customers} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше покупателей — больше выручка. Это прямая пропорция.",

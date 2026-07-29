@@ -13,7 +13,6 @@ def build_question():
         "title": "Хранение апельсинов",
         "story": "Каждая коробка вмещает одинаковое число апельсинов.",
         "prompt": f"Если 1 коробка вмещает {oranges_per_box} апельсинов, сколько коробок нужно для {chosen_oranges} апельсинов?",
-        "formula_text": f"{chosen_oranges} ÷ {oranges_per_box} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше апельсинов — больше коробок. Это прямая пропорция.",

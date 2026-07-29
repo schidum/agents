@@ -13,7 +13,6 @@ def build_question():
         "title": "Цена фруктов",
         "story": "Каждый килограмм яблок стоит одинаково.",
         "prompt": f"Если 2 кг яблок стоят {price_for_two} монет, сколько стоят {chosen_weight} кг?",
-        "formula_text": f"{price_for_two} ÷ 2 x {chosen_weight} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Чем больше яблок, тем больше цена. Это прямая пропорция.",

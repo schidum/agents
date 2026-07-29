@@ -13,7 +13,6 @@ def build_question():
         "title": "Классы и ученики",
         "story": "В каждом классе учится одинаковое число детей.",
         "prompt": f"Если в одном классе {students_per_section} учеников, сколько классов нужно для {chosen_students} учеников?",
-        "formula_text": f"{chosen_students} ÷ {students_per_section} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше детей — больше классов. Это прямая пропорция.",

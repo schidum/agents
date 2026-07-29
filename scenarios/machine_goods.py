@@ -14,7 +14,6 @@ def build_question():
         "title": "Производство на фабрике",
         "story": "Каждая машина делает одинаковое число вещей за день.",
         "prompt": f"Если {machines} машины делают {units_per_machine * machines} вещей, сколько вещей сделают {chosen_machines} машины?",
-        "formula_text": f"{units_per_machine} x {chosen_machines} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше машин — больше изделий. Это прямая пропорция.",

@@ -14,7 +14,6 @@ def build_question():
         "title": "Заработок рабочего",
         "story": "Рабочий получает одинаковую оплату за каждый час работы.",
         "prompt": f"Если он за {hours} часа получает {money_per_hour * hours} монет, сколько он получит за {chosen_hours} часов?",
-        "formula_text": f"{money_per_hour} x {chosen_hours} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Чем больше часов, тем больше заработок. Это прямая пропорция.",

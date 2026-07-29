@@ -13,7 +13,6 @@ def build_question():
         "title": "Расход топлива",
         "story": "Автомобиль тратит одинаковое количество топлива на каждый километр.",
         "prompt": f"Если машина проезжает {kilometer_per_liter} км на 3 литра, сколько литров нужно на {chosen_distance} км?",
-        "formula_text": f"3 ÷ {kilometer_per_liter} x {chosen_distance} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Чем больше путь, тем больше топлива. Это прямая пропорция.",

@@ -78,6 +78,32 @@ class Game:
             pygame.draw.circle(self.screen, WHITE, (x + 25, 100), 25)
             pygame.draw.circle(self.screen, WHITE, (x + 50, 100), 25)
 
+    def draw_wrapped_text(self, text, font, color, x, y, max_width, line_height=32, center=True):
+        """Рисуем длинный текст по словам, чтобы он не выходил за экран."""
+        words = text.split()
+        lines = []
+        current_line = ""
+
+        for word in words:
+            test_line = f"{current_line} {word}".strip()
+            if font.size(test_line)[0] <= max_width:
+                current_line = test_line
+            else:
+                if current_line:
+                    lines.append(current_line)
+                current_line = word
+
+        if current_line:
+            lines.append(current_line)
+
+        for index, line in enumerate(lines):
+            rendered = font.render(line, True, color)
+            if center:
+                draw_x = x + (max_width - rendered.get_width()) // 2
+            else:
+                draw_x = x
+            self.screen.blit(rendered, (draw_x, y + index * line_height))
+
     def draw_title_screen(self):
         """Рисуем стартовый экран с новой идеей игры."""
         self.draw_background()
@@ -93,9 +119,8 @@ class Game:
             "Нажмите правильный ответ или используйте 1, 2, 3, 4.",
         ]
         for index, text in enumerate(help_text):
-            rendered = self.body_font.render(text, True, BLACK)
             y = 210 + index * 44
-            self.screen.blit(rendered, (WIDTH // 2 - rendered.get_width() // 2, y))
+            self.draw_wrapped_text(text, self.body_font, BLACK, 70, y, 820, line_height=34)
 
         self.start_button = pygame.Rect(WIDTH // 2 - 120, 380, 240, 70)
         pygame.draw.rect(self.screen, BUTTON_GREEN, self.start_button)
@@ -115,14 +140,8 @@ class Game:
         title_text = self.heading_font.render(self.question["title"], True, BLACK)
         self.screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, 60))
 
-        story_text = self.body_font.render(self.question["story"], True, BLACK)
-        self.screen.blit(story_text, (WIDTH // 2 - story_text.get_width() // 2, 105))
-
-        prompt_text = self.heading_font.render(self.question["prompt"], True, BLACK)
-        self.screen.blit(prompt_text, (WIDTH // 2 - prompt_text.get_width() // 2, 145))
-
-        formula_text = self.body_font.render(self.question["formula_text"], True, PURPLE)
-        self.screen.blit(formula_text, (WIDTH // 2 - formula_text.get_width() // 2, 185))
+        self.draw_wrapped_text(self.question["story"], self.body_font, BLACK, 70, 105, 820, line_height=32)
+        self.draw_wrapped_text(self.question["prompt"], self.heading_font, BLACK, 60, 145, 840, line_height=36)
 
         if self.current_scenario is not None:
             self.current_scenario.draw_scene(
@@ -142,8 +161,7 @@ class Game:
             self.screen.blit(text, (rect.x + rect.width // 2 - text.get_width() // 2, rect.y + 14))
 
         if self.feedback_text:
-            feedback_surface = self.body_font.render(self.feedback_text, True, BLACK)
-            self.screen.blit(feedback_surface, (WIDTH // 2 - feedback_surface.get_width() // 2, 500))
+            self.draw_wrapped_text(self.feedback_text, self.body_font, BLACK, 70, 500, 820, line_height=32)
 
     def draw_game_over_screen(self):
         """Показываем финальный результат и возможность сыграть ещё раз."""
@@ -154,8 +172,7 @@ class Game:
         score_text = self.heading_font.render(f"Ты решил {self.score} из {self.max_rounds} раундов.", True, BLACK)
         self.screen.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, 180))
 
-        tip_text = self.body_font.render("Прямая пропорция — это когда всё растёт или уменьшается вместе.", True, BLACK)
-        self.screen.blit(tip_text, (WIDTH // 2 - tip_text.get_width() // 2, 240))
+        self.draw_wrapped_text("Прямая пропорция — это когда всё растёт или уменьшается вместе.", self.body_font, BLACK, 70, 240, 820, line_height=32)
 
         self.restart_button = pygame.Rect(WIDTH // 2 - 140, 340, 280, 70)
         pygame.draw.rect(self.screen, BUTTON_GREEN, self.restart_button)

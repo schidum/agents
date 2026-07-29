@@ -14,7 +14,6 @@ def build_question():
         "title": "Пища в общежитии",
         "story": "Каждый живущий в общежитии съедает одинаковое число лепёшек.",
         "prompt": f"Если {people} человек едят {chapatis_per_person * people} лепёшек, сколько лепёшек нужно для {new_people} человек?",
-        "formula_text": f"{chapatis_per_person} x {new_people} = {correct_answer}",
         "correct_answer": correct_answer,
         "options": options,
         "explanation": "Больше людей — больше еды. Это прямая пропорция.",
