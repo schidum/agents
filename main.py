@@ -24,7 +24,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Парад прямой пропорции")
+        pygame.display.set_caption("Примеры прямой пропорции")
         self.clock = pygame.time.Clock()
 
         self.title_font = pygame.font.SysFont("Arial", 48, bold=True)
@@ -107,7 +107,7 @@ class Game:
     def draw_title_screen(self):
         """Рисуем стартовый экран с новой идеей игры."""
         self.draw_background()
-        title = self.title_font.render("Парад прямой пропорции", True, BLACK)
+        title = self.title_font.render("Примеры прямой пропорции", True, BLACK)
         self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 70))
 
         subtitle = self.body_font.render("Теперь каждый раунд — новый пример из жизни!", True, BLACK)
@@ -154,14 +154,17 @@ class Game:
                 self.question,
             )
 
+        if self.feedback_text:
+            feedback_box = pygame.Rect(70, 430, 820, 54)
+            pygame.draw.rect(self.screen, WHITE, feedback_box, border_radius=12)
+            pygame.draw.rect(self.screen, BLACK, feedback_box, 3, border_radius=12)
+            self.draw_wrapped_text(self.feedback_text, self.body_font, BLACK, 80, 441, 800, line_height=28)
+
         for rect, answer in self.answer_buttons:
             pygame.draw.rect(self.screen, BUTTON_BLUE, rect, border_radius=12)
             pygame.draw.rect(self.screen, BLACK, rect, 3, border_radius=12)
             text = self.body_font.render(str(answer), True, WHITE)
             self.screen.blit(text, (rect.x + rect.width // 2 - text.get_width() // 2, rect.y + 14))
-
-        if self.feedback_text:
-            self.draw_wrapped_text(self.feedback_text, self.body_font, BLACK, 70, 500, 820, line_height=32)
 
     def draw_game_over_screen(self):
         """Показываем финальный результат и возможность сыграть ещё раз."""
