@@ -1,4 +1,4 @@
-# Development guide
+﻿# Development guide
 
 ## Running the game
 
@@ -13,9 +13,10 @@ Because this project is a simple pygame app, the most important validation is to
 
 - the title screen appears,
 - the questions load,
+- the scenario pictures appear,
 - answer buttons work,
 - the score updates correctly,
-- the game ends after 8 rounds.
+- the game ends after 10 rounds.
 
 ## Headless smoke check
 
@@ -32,4 +33,5 @@ This is useful for CI or remote environments.
 
 - Keep educational content accurate and child-friendly.
 - Use comments to explain why the math is being shown in a certain way.
-- When you add new question types, make sure the direct-proportion relationship is still obvious.
+- When you add new scenario modules, make sure each one shows a clear direct-proportion relationship.
+- Keep the game simple enough for a young learner to enjoy.

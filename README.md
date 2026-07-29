@@ -1,17 +1,27 @@
-# Direct Proportion Parade
+﻿# Direct Proportion Parade
 
-Direct Proportion Parade is a small pygame game made for children who are learning how direct proportion works. The player helps a cheerful explorer collect gems by choosing the correct answer to simple questions such as:
+Direct Proportion Parade is a small pygame game made for children who are learning how direct proportion works. The player helps a cheerful explorer collect gems by choosing the correct answer to simple questions from real-life situations.
 
-- If 1 chest holds 2 gems, how many gems are in 3 chests?
-- If 1 box holds 3 cookies, how many cookies are in 4 boxes?
+The new version uses ten short examples from everyday life, such as:
 
-The game keeps the experience gentle and visual. Each round shows a clear example with chests and gems so the child can see that the total grows in a steady way.
+- wages for a worker
+- the cost of fruit
+- homework time
+- fuel consumption in a car
+- the number of boxes needed for oranges
+- food in a hostel
+- goods made by machines
+- students and school sections
+- crop harvest on a field
+- shop earnings
+
+Each round shows one story, one simple math question, and a tiny picture so the child can see that the total grows in a steady way.
 
 ## Features
 
-- Very simple one-screen game loop
+- Ten different real-life examples of direct proportion
+- One small module for each example in the `scenarios` package
 - Friendly visuals and bright colors
-- Clear direct-proportion questions
 - Keyboard or mouse play
 - Built with only pygame and Python standard library
 
@@ -28,15 +38,16 @@ The game keeps the experience gentle and visual. Each round shows a clear exampl
 ## How to play
 
 - Press Enter or click Start to begin.
-- Read the question and look at the chests and gems.
-- Click the correct answer button or press 1, 2, or 3 on the keyboard.
-- After each round, the game gives a short message and then presents a new question.
-- After 8 rounds, the game shows your score.
+- Read the short story and look at the picture.
+- Click the correct answer button or press 1, 2, 3, or 4 on the keyboard.
+- After each round, the game gives a short message and then shows a new example.
+- After 10 rounds, the game shows your score.
 
 ## Project layout
 
-- `main.py` - the full game implementation
-- `requirements.txt` - python dependencies
+- `main.py` - the main game loop and question flow
+- `scenarios/` - one Python module for each real-life example
+- `requirements.txt` - Python dependencies
 - `README.md` - overview and setup instructions
 - `CONTRIBUTING.md` - how to contribute safely
 - `DEVELOPMENT.md` - local workflow and testing notes
@@ -44,4 +55,4 @@ The game keeps the experience gentle and visual. Each round shows a clear exampl
 
 ## Agentic development notes
 
-This repository is intentionally simple so that future agents can extend it safely. The game logic is centered in `main.py`, and the project docs explain the intended learning goal and coding style.
+This repository is intentionally simple so that future agents can extend it safely. The educational goal stays in the foreground, and the scenario modules make it easy to add more real-life examples later.
