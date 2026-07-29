@@ -1,28 +1,28 @@
-"""Direct Proportion Parade
+﻿"""Парад прямой пропорции
 
-A tiny educational game for children. The player helps a cheerful character
-collect gems by solving simple direct-proportion questions.
+Небольшая обучающая игра для детей. Игрок помогает весёлому герою
+собирать самоцветы, решая простые задачи на прямую пропорцию.
 
-The core idea is easy to understand:
-- If one chest holds 2 gems, then 3 chests hold 6 gems.
-- The amount grows in a straight, predictable way.
+Главная идея очень простая:
+- Если один сундук вмещает 2 самоцвета, то 3 сундука вмещают 6 самоцветов.
+- Количество растёт предсказуемо и ровно.
 
-This file is intentionally simple so that children can focus on the math.
-It also contains many comments to make the code easy to read for students,
-teachers, and future agents that may extend the project.
+Этот файл намеренно прост, чтобы дети могли сосредоточиться на математике.
+Он также содержит много комментариев, чтобы код был понятен ученикам,
+учителям и будущим агентам, которые захотят расширить проект.
 """
 
 import random
 import pygame
 
 # ---------------------------------------------------------------------------
-# Global constants
+# Глобальные константы
 # ---------------------------------------------------------------------------
 
 WIDTH, HEIGHT = 960, 640
 FPS = 60
 
-# A few friendly colors.
+# Несколько дружелюбных цветов.
 WHITE = (255, 255, 255)
 BLACK = (20, 20, 20)
 SKY_BLUE = (123, 199, 255)
@@ -37,22 +37,22 @@ PURPLE = (130, 98, 255)
 
 
 class Game:
-    """Main game object that stores state and runs the game loop."""
+    """Основной объект игры, который хранит состояние и запускает игровой цикл."""
 
     def __init__(self):
-        # Start pygame and create the window.
+        # Запускаем pygame и создаём окно.
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Direct Proportion Parade")
+        pygame.display.set_caption("Парад прямой пропорции")
         self.clock = pygame.time.Clock()
 
-        # Use fonts so text is easy to read.
+        # Используем шрифты, чтобы текст был легко читаем.
         self.title_font = pygame.font.SysFont("Arial", 48, bold=True)
         self.heading_font = pygame.font.SysFont("Arial", 34, bold=True)
         self.body_font = pygame.font.SysFont("Arial", 28)
         self.small_font = pygame.font.SysFont("Arial", 22)
 
-        # Game state.
+        # Состояние игры.
         self.state = "title"  # title -> playing -> game_over
         self.score = 0
         self.round = 0
@@ -64,20 +64,20 @@ class Game:
         self.start_button = None
         self.restart_button = None
 
-        # Set the first question.
+        # Готовим первый вопрос.
         self.new_question()
 
     def new_question(self):
-        """Create a fresh direct-proportion question and answer choices."""
-        # Direct proportion means the total grows by the same amount each time.
-        # For example, if 1 chest has 2 gems, then 3 chests have 6 gems.
-        # We choose a simple "per box" value and a number of boxes.
+        """Создаём новый вопрос на прямую пропорцию и варианты ответов."""
+        # Прямая пропорция означает, что всё растёт одинаково каждый раз.
+        # Например, если 1 сундук вмещает 2 самоцвета, то 3 сундука вмещают 6.
+        # Мы выбираем простое значение «на один сундук» и количество сундуков.
         per_box = random.choice([2, 3, 4])
         box_count = random.choice([2, 3, 4, 5])
         correct_answer = per_box * box_count
 
-        # Create three simple answer choices. The correct answer is always one of them.
-        # The distractors are close enough to feel real but not correct.
+        # Создаём три простых варианта ответа. Правильный ответ всегда есть среди них.
+        # Отвлекающие варианты достаточно близки, чтобы выглядеть правдоподобно, но быть неверными.
         options = [correct_answer]
         if correct_answer - 2 >= 1:
             options.append(correct_answer - 2)
@@ -89,11 +89,11 @@ class Game:
         else:
             options.append(correct_answer + 1)
 
-        # Keep the choices unique and shuffle them so the correct answer is not always first.
+        # Делаем варианты уникальными и перемешиваем их, чтобы правильный ответ не всегда был первым.
         options = list(dict.fromkeys(options))
         random.shuffle(options)
 
-        # Save the question data in a dictionary for easy drawing and checks.
+        # Сохраняем данные вопроса в словарь для простого рисования и проверки.
         self.question = {
             "per_box": per_box,
             "box_count": box_count,
@@ -101,7 +101,7 @@ class Game:
             "options": options,
         }
 
-        # Build the answer button positions.
+        # Создаём позиции кнопок ответа.
         self.answer_buttons = []
         button_y = HEIGHT - 140
         button_width = 140
@@ -115,73 +115,73 @@ class Game:
             self.answer_buttons.append((rect, answer))
 
     def draw_background(self):
-        """Draw the sky, sun, and grassy ground."""
+        """Рисуем небо, солнце и травянистую землю."""
         self.screen.fill(SKY_BLUE)
 
-        # Sun.
+        # Солнце.
         pygame.draw.circle(self.screen, GOLD, (120, 120), 60)
 
-        # Ground.
+        # Земля.
         pygame.draw.rect(self.screen, GROUND_GREEN, (0, 480, WIDTH, HEIGHT - 480))
 
-        # A few simple clouds to make the scene feel friendly.
+        # Несколько простых облаков, чтобы сцена казалась дружелюбной.
         for x in [180, 400, 720]:
             pygame.draw.circle(self.screen, WHITE, (x, 100), 25)
             pygame.draw.circle(self.screen, WHITE, (x + 25, 100), 25)
             pygame.draw.circle(self.screen, WHITE, (x + 50, 100), 25)
 
     def draw_title_screen(self):
-        """Draw the opening screen and instructions."""
+        """Рисуем стартовый экран и инструкции."""
         self.draw_background()
 
-        title = self.title_font.render("Direct Proportion Parade", True, BLACK)
+        title = self.title_font.render("Парад прямой пропорции", True, BLACK)
         self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 70))
 
-        subtitle = self.body_font.render("Help the little explorer collect gems!", True, BLACK)
+        subtitle = self.body_font.render("Помоги маленькому исследователю собирать самоцветы!", True, BLACK)
         self.screen.blit(subtitle, (WIDTH // 2 - subtitle.get_width() // 2, 140))
 
         help_text = [
-            "Each box holds the same number of gems.",
-            "More boxes means more gems in a straight line.",
-            "Click the correct answer or press 1, 2, or 3.",
+            "Каждый сундук вмещает одинаковое число самоцветов.",
+            "Больше сундуков — больше самоцветов, и это происходит ровно.",
+            "Нажми правильный ответ или используй 1, 2 или 3.",
         ]
         for index, text in enumerate(help_text):
             rendered = self.body_font.render(text, True, BLACK)
             y = 220 + index * 40
             self.screen.blit(rendered, (WIDTH // 2 - rendered.get_width() // 2, y))
 
-        # Start button.
+        # Кнопка старта.
         self.start_button = pygame.Rect(WIDTH // 2 - 120, 380, 240, 70)
         pygame.draw.rect(self.screen, BUTTON_GREEN, self.start_button)
-        start_text = self.heading_font.render("Start", True, WHITE)
+        start_text = self.heading_font.render("Начать", True, WHITE)
         self.screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, 395))
 
     def draw_playing_screen(self):
-        """Draw the question, the visual example, and the answer buttons."""
+        """Рисуем вопрос, наглядный пример и кнопки ответов."""
         self.draw_background()
 
-        # Show the current score and round number.
-        score_text = self.small_font.render(f"Score: {self.score}/{self.max_rounds}", True, BLACK)
+        # Показываем текущий счёт и номер раунда.
+        score_text = self.small_font.render(f"Счёт: {self.score}/{self.max_rounds}", True, BLACK)
         self.screen.blit(score_text, (30, 25))
 
         question = self.question
         if question is None:
             return
 
-        # Explain the rule at the top.
+        # Объясняем правило вверху.
         rule_sentence = (
-            f"If 1 chest holds {question['per_box']} gems, how many gems are in "
-            f"{question['box_count']} chests?"
+            f"Если 1 сундук вмещает {question['per_box']} самоцветов, "
+            f"сколько самоцветов будет в {question['box_count']} сундуках?"
         )
         rule_text = self.heading_font.render(rule_sentence, True, BLACK)
         self.screen.blit(rule_text, (WIDTH // 2 - rule_text.get_width() // 2, 60))
 
-        # Show a simple formula that makes the ratio clear.
+        # Показываем простую формулу, чтобы отношение было видно ясно.
         formula = f"{question['per_box']} x {question['box_count']} = {question['correct_answer']}"
         formula_text = self.body_font.render(formula, True, PURPLE)
         self.screen.blit(formula_text, (WIDTH // 2 - formula_text.get_width() // 2, 110))
 
-        # Draw the visual chests and gems. This is the heart of the lesson.
+        # Рисуем сундуки и самоцветы. Это сердце урока.
         chest_y = 220
         chest_width = 90
         chest_height = 80
@@ -193,10 +193,10 @@ class Game:
             pygame.draw.rect(self.screen, BUTTON_ORANGE, (chest_x, chest_y, chest_width, chest_height), border_radius=12)
             pygame.draw.rect(self.screen, BLACK, (chest_x, chest_y, chest_width, chest_height), 3, border_radius=12)
 
-            # Add a lid to the chest.
+            # Добавляем крышку сундука.
             pygame.draw.rect(self.screen, BUTTON_RED, (chest_x + 10, chest_y - 16, chest_width - 20, 20), border_radius=8)
 
-            # Draw the gems inside the chest.
+            # Рисуем самоцветы внутри сундука.
             gem_count = question['per_box']
             for gem_index in range(gem_count):
                 gem_x = chest_x + 20 + (gem_index % 2) * 20
@@ -204,7 +204,7 @@ class Game:
                 pygame.draw.circle(self.screen, GOLD, (gem_x, gem_y), 12)
                 pygame.draw.circle(self.screen, BLACK, (gem_x, gem_y), 12, 2)
 
-        # Draw the answer buttons.
+        # Рисуем кнопки ответов.
         for rect, answer in self.answer_buttons:
             color = BUTTON_BLUE
             pygame.draw.rect(self.screen, color, rect, border_radius=12)
@@ -212,31 +212,31 @@ class Game:
             text = self.body_font.render(str(answer), True, WHITE)
             self.screen.blit(text, (rect.x + rect.width // 2 - text.get_width() // 2, rect.y + 14))
 
-        # Show feedback if the player just answered.
+        # Показываем подсказку, если игрок только что ответил.
         if self.feedback_text:
             feedback_surface = self.body_font.render(self.feedback_text, True, BLACK)
             self.screen.blit(feedback_surface, (WIDTH // 2 - feedback_surface.get_width() // 2, 520))
 
     def draw_game_over_screen(self):
-        """Show the final score and a way to play again."""
+        """Показываем финальный счёт и возможность сыграть ещё раз."""
         self.draw_background()
 
-        heading = self.title_font.render("Great work!", True, BLACK)
+        heading = self.title_font.render("Отличная работа!", True, BLACK)
         self.screen.blit(heading, (WIDTH // 2 - heading.get_width() // 2, 100))
 
-        score_text = self.heading_font.render(f"You solved {self.score} out of {self.max_rounds} rounds.", True, BLACK)
+        score_text = self.heading_font.render(f"Ты решил {self.score} из {self.max_rounds} раундов.", True, BLACK)
         self.screen.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, 180))
 
-        tip_text = self.body_font.render("Direct proportion means every extra box adds the same amount.", True, BLACK)
+        tip_text = self.body_font.render("Прямая пропорция значит, что каждый новый сундук добавляет одинаковое количество.", True, BLACK)
         self.screen.blit(tip_text, (WIDTH // 2 - tip_text.get_width() // 2, 240))
 
         self.restart_button = pygame.Rect(WIDTH // 2 - 140, 340, 280, 70)
         pygame.draw.rect(self.screen, BUTTON_GREEN, self.restart_button)
-        restart_text = self.heading_font.render("Play Again", True, WHITE)
+        restart_text = self.heading_font.render("Играть снова", True, WHITE)
         self.screen.blit(restart_text, (WIDTH // 2 - restart_text.get_width() // 2, 355))
 
     def handle_events(self):
-        """Handle user input for mouse clicks and keyboard presses."""
+        """Обрабатываем ввод пользователя: клики мышью и клавиши."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -285,18 +285,18 @@ class Game:
                     self.new_question()
 
     def answer_selected(self, answer):
-        """Respond when the player picks an answer."""
+        """Отвечаем, когда игрок выбирает вариант."""
         if self.question is None:
             return
 
         self.round += 1
         if answer == self.question["correct_answer"]:
             self.score += 1
-            self.feedback_text = "Correct! Nice job!"
+            self.feedback_text = "Верно! Отличная работа!"
         else:
-            self.feedback_text = f"Not quite. The right answer is {self.question['correct_answer']}."
+            self.feedback_text = f"Почти. Правильный ответ: {self.question['correct_answer']}."
 
-        # Give the player a short moment to read the message before the next question.
+        # Даём игроку короткую паузу, чтобы прочитать сообщение перед следующим вопросом.
         self.feedback_timer = pygame.time.get_ticks() + 900
 
         if self.round >= self.max_rounds:
@@ -305,14 +305,14 @@ class Game:
             self.state = "playing"
 
     def update(self):
-        """Advance the game and move to the next question when the timer expires."""
+        """Переходим к следующему вопросу, когда таймер закончился."""
         if self.state == "playing" and self.feedback_text:
             if pygame.time.get_ticks() >= self.feedback_timer:
                 self.feedback_text = ""
                 self.new_question()
 
     def draw(self):
-        """Route each state to the correct drawing function."""
+        """Направляем каждое состояние в нужную функцию рисования."""
         if self.state == "title":
             self.draw_title_screen()
         elif self.state == "playing":
@@ -321,7 +321,7 @@ class Game:
             self.draw_game_over_screen()
 
     def run(self):
-        """Main loop for the game."""
+        """Основной цикл игры."""
         self.running = True
         while self.running:
             self.handle_events()
@@ -332,7 +332,7 @@ class Game:
 
 
 def main():
-    """Entry point for the game."""
+    """Точка входа в игру."""
     game = Game()
     game.run()
 
